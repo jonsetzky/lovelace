@@ -32,6 +32,7 @@ dependencies = [
     "python-magic",
     "PyYAML",
     "redis",
+    "httpx",
 ]
 
 [project.optional-dependencies]

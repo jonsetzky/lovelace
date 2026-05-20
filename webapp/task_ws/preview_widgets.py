@@ -81,6 +81,50 @@ class TurtlePreviewWidget(PreviewWidget):
             settings.export(instance, export_target)
 
 
+class CompilerExplorerWidget(PreviewWidget):
+
+    handle = "ce"
+    template = "task_ws/widgets/ce-preview-widget.html"
+    configurable = True
+    receive_callback = "compilerexplorerwidget.receive"
+
+    def render(self, context):
+        t = loader.get_template(self.template)
+        settings = self.get_settings()
+        print(settings)
+        context["xterm_rows"] = settings.rows
+        context["widget_slug"] = settings.slug
+        context["stdin"] = settings.default_stdin
+        context["compiler"] = settings.compiler
+        context["compiler_args"] = settings.compiler_args
+        return t.render(context)
+
+    def get_configuration_form(self, request, data=None, prefix=None):
+        return task_ws.forms.CompilerExplorerWidgetConfigurationForm(
+            data,
+            instance=self.get_settings(),
+            prefix=prefix
+        )
+
+    def get_settings(self):
+        try:
+            settings = task_ws.models.CompilerExplorerWidgetSettings.objects.get(
+                slug=self.slug
+            )
+        except task_ws.models.CompilerExplorerWidgetSettings.DoesNotExist:
+            settings = task_ws.models.CompilerExplorerWidgetSettings(
+                name=self.slug.removeprefix(self.course.prefix + "-"),
+                course=self.course,
+            )
+        return settings
+
+    def export(self, instance, export_target):
+        settings = self.get_settings()
+        if settings.pk is not None:
+            settings.export(instance, export_target)
+
+
 def register_preview_widgets():
     PreviewWidgetRegistry.register_widget(XtermPreviewWidget)
     PreviewWidgetRegistry.register_widget(TurtlePreviewWidget)
+    PreviewWidgetRegistry.register_widget(CompilerExplorerWidget)

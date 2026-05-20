@@ -1,14 +1,38 @@
 import os
 from dotenv import load_dotenv
+import logging
 
 load_dotenv(os.getenv("DOTENV_PATH"))
+
+COMPILER_EXPLORER_URL = os.environ["COMPILER_EXPLORER_URL"]
+if COMPILER_EXPLORER_URL.endswith("/"):
+    COMPILER_EXPLORER_URL = COMPILER_EXPLORER_URL[:-1]
+
+STATIC_URL = "/static/"
+
+DEBUG = True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'daphne': {
+            'handlers': [
+                'console',
+            ],
+            'level': 'DEBUG'
+        },
+    },
+}
 
 ALLOWED_HOSTS = os.environ["LOVELACE_HOSTNAME"].split(
     ":") + [os.environ["LOVELACE_HOSTADDR"]]
 ALLOWED_WS_ORIGINS = os.environ["LOVELACE_WS_ORIGINS"].split(",")
-COMPILER_EXPLORER_URL = os.environ["COMPILER_EXPLORER_URL"]
-if COMPILER_EXPLORER_URL.endswith("/"):
-    COMPILER_EXPLORER_URL = COMPILER_EXPLORER_URL[:-1]
 
 SECRET_KEY = os.environ["LOVELACE_SECRET_KEY"]
 INSTALLED_APPS = [
@@ -23,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
 ]
 TIME_ZONE = "Europe/Helsinki"
 
