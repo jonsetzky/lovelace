@@ -77,8 +77,8 @@ var CompilerExplorerWidget = class {
 
     end() {
         if (this.compiling) {
-            this.xterm.reset()
             this.compiling = false
+            this.xterm.reset()
             this.write("\x1b[0;31mConnection closed before compilation finished\x1b[0m\n")
         }
     }
@@ -122,11 +122,11 @@ var CompilerExplorerWidget = class {
                 this.clear_line()
                 this.xterm.write("compiling and running")
                 for (let i = 0; i < 3; i++) {
-                    this.xterm.write(".")
-                    await new Promise(resolve => setTimeout(resolve, 500));
                     if (!this.compiling) {
                         break;
                     }
+                    this.xterm.write(".")
+                    await new Promise(resolve => setTimeout(resolve, 500));
                 }
             }
         })()
