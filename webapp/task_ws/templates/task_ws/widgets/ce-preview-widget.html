@@ -4,7 +4,11 @@
 <link type="text/css" rel="stylesheet" href="{% static 'task_ws/xterm/css/xterm.css' %}">
 
 <div id="{{ widget_slug }}-xterm-window"
-     class="xterm-window"></div>
+     class="xterm-window">
+  <textarea style="min-width: 100%; max-width: 100%; width: 502px; height: 32px;" 
+  cols="40" rows="10" maxlength="1024" tabindex="0"
+  id="{{ widget_slug }}-stdin" class="xterm-stdin">{{ stdin }}</textarea>
+</div>
 
 <script src="{% static 'task_ws/xterm/lib/xterm.js' %}"></script>
 <script src="{% static 'task_ws/addon-fit/lib/addon-fit.js' %}"></script>

@@ -15,10 +15,13 @@ var CompilerExplorerWidget = class {
     }
 
     constructor(widget_id, rows, stdin, compiler, compiler_args) {
+        this.parentElement = document.getElementById(widget_id)
+        this.stdinElement = this.parentElement.querySelector('.xterm-stdin')
+
         this.xterm = new Terminal({rows: rows})
         const fitAddon = new FitAddon.FitAddon()
         this.xterm.loadAddon(fitAddon)
-        this.xterm.open(document.getElementById(widget_id))
+        this.xterm.open(this.parentElement)
         fitAddon.fit()
         document.querySelector('.xterm-width-cache-measure-container').style.fontVariantLigatures='none';
         document.querySelector('.xterm-rows').style.fontVariantLigatures='none';
@@ -179,7 +182,7 @@ var CompilerExplorerWidget = class {
 
     getConfig() {
         return {
-            "stdin": this.stdin,
+            "stdin": this.stdinElement.value,
             "compiler": this.compiler,
             "compiler_args": this.compiler_args
         }
