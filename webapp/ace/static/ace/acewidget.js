@@ -44,8 +44,15 @@ var AceWidget = class {
         /**  @type {WSPreviewWidget} */
         this.preview = preview
         this.button = $("button#" + button_id)
-        this.button.click((button) => this.connect_ws(button))
+        this.button.click((button) => {
+            if (this.clicked)
+                return
+
+            this.clicked = true
+            this.connect_ws(button)
+        })
         this.running = false
+        this.clicked = false
     }
 
     connect_ws() {
@@ -107,6 +114,7 @@ var AceWidget = class {
         this.button.prop("disabled", false)
         this.preview.end()
         this.running = false
+        this.clicked = false
     }
 }
 
