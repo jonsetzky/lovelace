@@ -73,7 +73,6 @@ class CompilerExplorerWidgetSettings(models.Model, ExportImportMixin):
 
     compiler_args = models.CharField(
         max_length=255,
-        default="-std=c++17",
         help_text="Default compiler arguments",
         blank=True
     )
