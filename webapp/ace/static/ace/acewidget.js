@@ -98,6 +98,9 @@ var AceWidget = class {
      * @param {string|undefined} err 
      */
     error(msg, err) {
+        this.button.removeClass("ace-button-running")
+        this.button.prop("disabled", false)
+        this.clicked = false
         if (this.running) {
             this.running = false
 
