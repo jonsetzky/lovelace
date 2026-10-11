@@ -5,9 +5,11 @@
 
 <div id="{{ widget_slug }}-xterm-window"
      class="xterm-window">
-  <textarea style="resize: vertical; box-sizing: border-box; width: 502px; height: 32px;" 
-  cols="40" rows="10" maxlength="1024" tabindex="0"
-  id="{{ widget_slug }}-stdin" class="xterm-stdin">{{ stdin }}</textarea>
+  <textarea
+    style="resize: vertical; box-sizing: border-box; width: 100%; min-width: 502px; height: 32px; min-height: 22px;"
+    cols="40" rows="10" maxlength="1024" tabindex="0"
+    id="{{ widget_slug }}-stdin"
+    class="xterm-stdin">{{ stdin }}</textarea>
 </div>
 
 <script src="{% static 'task_ws/xterm/lib/xterm.js' %}"></script>
